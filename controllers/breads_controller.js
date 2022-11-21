@@ -21,16 +21,14 @@ breads.get('/new', (req, res) => {
 // SHOW
 breads.get('/:arrayIndex', (req, res) => {
     if (Bread[req.params.arrayIndex]) {
-        res.render('Show', {
-            bread: Bread[req.params.arrayIndex]
-        })
+      res.render('Show', {
+        bread:Bread[req.params.arrayIndex],
+        index: req.params.arrayIndex,
+      })
     } else {
-        res.render('404', {
-
-            title: "Oh no! Someone ate the bread!"
-        })
+      res.render('404')
     }
-})
+  })  
 
 // CREATE
 breads.post('/', (req, res) => {
@@ -45,5 +43,12 @@ breads.post('/', (req, res) => {
     Bread.push(req.body)
     res.redirect('/breads')
 })
+
+// DELETE
+breads.delete('/:indexArray', (req, res) => {
+    Bread.splice(req.params.indexArray, 1)
+    res.status(303).redirect('/breads')
+  })
+  
 
 module.exports = breads
